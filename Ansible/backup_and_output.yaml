@@ -1,0 +1,28 @@
+---
+- name: BACKUP IOS RUNNING-CONFIG
+  hosts: [TO_DO]
+  connection: network_cli
+  gather_facts: false
+
+  tasks:
+    - name: DISPLAYING RUNNING-CONFIG
+      ios_command:
+        commands:
+          - [TO_DO]
+      register: [TO_DO]
+
+    - name: GET SHOW IP INT BRIEF
+      ios_command:
+        commands:
+        - [TO_DO]
+      register: [TO_DO]
+
+    - name: SAVE OUTPUT TO ./backups/
+      copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "backups/show_run_{{ inventory_hostname }}.txt" 
+
+    - name: SAVE OUTPUT TO ./backups/
+      copy:
+        content: "{{ output.stdout[0] }}"
+        dest: "backups/show_ip_int_{{ inventory_hostname }}.txt" 

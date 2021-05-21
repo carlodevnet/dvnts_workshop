@@ -1,0 +1,18 @@
+---
+- name: Send notification of completed lab!
+  hosts: localhost
+  vars:
+    room_id: [TO_DO]
+    token: [TO_DO]
+    student_name: [TO_DO]
+    folder_name: [TO_DO]
+
+  tasks:
+    - name: Cisco Webex Teams - Text Message to a Room
+      community.general.cisco_webex:
+        recipient_type: roomId
+        recipient_id: "{{ room_id }}"
+        msg_type: text
+        personal_token: "{{ token }}"
+        msg: "{{ student_name }} has completed the activity. The folder used to store the backup is {{ folder_name }}"
+

@@ -1,0 +1,65 @@
+---
+- name: APPLY BASIC CONFIGURATION
+  hosts: [TO_DO] 
+  gather_facts: false
+  connection: network_cli
+  vars:
+    nome_studente: [TO_DO]
+  tasks:
+
+    - name: CONFIGURE HOSTNAME DOMAIN NAME AND IP DOMAIN LOOKUP
+      ios_system:
+        hostname: [TO_DO]
+        lookup_enabled: no
+        domain_name: [TO_DO]
+        domain_search:
+          - [TO_DO]
+
+    - name: CONFIGURE NAME SERVERS
+      ios_system:
+        name_servers:
+        - [TO_DO] 
+        - [TO_DO]
+
+    - name: CONFIGURE INTERFACE G0/1 IPv4 ADDRESS AND DESCRIPTION
+      ios_config:
+        parents: "interface GigabitEthernet0/1" 
+        lines:
+          - description {{ nome_studente }}
+          - ip address [TO_DO] [TO_DO]
+          - no shut
+      
+    - name: CONFIGURE STANDARD BANNER
+      ios_banner:
+        banner: login
+        text: |
+          UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+          You must have explicit, authorized permission to access or configure this device.
+          Unauthorized attempts and actions to access or use this system may result in civil and/or 
+          criminal penalties.
+          All activities performed on this device are logged and monitored.
+        state: [TO_DO]
+
+
+    - name: CONFIGURE USER WITH SPECIFIC PASSWORD
+      ios_user:
+        name: [TO_DO]
+        configured_password: [TO_DO]
+        privilege: 15
+        password_type: secret
+
+    - name: CONFIGURE STANDARD VTY LINES
+      ios_config:
+        lines:
+          - password cisco
+          - [TO_DO]
+          - [TO_DO]
+        parents:
+          - "{{ item }}"
+      with_items:
+        - line vty 0 15
+
+    - name: SET ENABLE PASSWORD
+      ios_config:
+        lines:
+          - enable secret [TO_DO]
